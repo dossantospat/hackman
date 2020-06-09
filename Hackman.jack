@@ -39,7 +39,15 @@ class Hackman {
                     let line = 0;
                     do stopMoving();
                 }
-                do drawOpenUp();
+                if(isOpenMouthed()) {
+                    do drawOpenUp();
+                } else {
+                    if(isHalfClosedMouthed()) {
+                        do drawHalfClosedUp();
+                    } else {
+                        do drawClosedUp();
+                    }
+                }
             }
             if(isFacingRight()) {
                 let row = row + 1;
@@ -63,7 +71,15 @@ class Hackman {
                     let line = 15;
                     do stopMoving();
                 }
-                do drawOpenDown();
+                if(isOpenMouthed()) {
+                    do drawOpenDown();
+                } else {
+                    if(isHalfClosedMouthed()) {
+                        do drawHalfClosedDown();
+                    } else {
+                        do drawClosedDown();
+                    }
+                }
             }
             if(isFacingLeft()) {
                 let row  = row - 1;
@@ -71,7 +87,15 @@ class Hackman {
                     let row = 0;
                     do stopMoving();
                 }
-                do drawOpenLeft();
+                if(isOpenMouthed()) {
+                    do drawOpenLeft();
+                } else {
+                    if(isHalfClosedMouthed()) {
+                        do drawHalfClosedLeft();
+                    } else {
+                        do drawClosedLeft();
+                    }
+                }
             }
         }
         do nextAnimation();
@@ -202,6 +226,9 @@ class Hackman {
         return;
 	}
 
+    /**
+     * Draws hackman with a half-closed mouth going right.
+     */
     method void drawHalfClosedRight() {
         var Array sprite;
         let sprite = Array.new(16);
@@ -285,6 +312,62 @@ class Hackman {
 	}
 
     /**
+     * Draws a hackman with an half-closed mouth going left
+     */
+    method void drawHalfClosedLeft() {
+        var Array sprite;
+        let sprite = Array.new(16);
+        let sprite[0] = 0;
+        let sprite[1] = 992;
+        let sprite[2] = 4088;
+        let sprite[3] = 8092;
+        let sprite[4] = 8092;
+        let sprite[5] = 16380;
+        let sprite[6] = 16368;
+        let sprite[7] = 16256;
+        let sprite[8] = 16368;
+        let sprite[9] = 16380;
+        let sprite[10] = 8188;
+        let sprite[11] = 8188;
+        let sprite[12] = 4088;
+        let sprite[13] = 992;
+        let sprite[14] = 0;
+        let sprite[15] = 0;
+
+        do Renderer.render(sprite, line, row);
+        do sprite.dispose();
+        return;
+    }
+
+    /**
+     * Draws a hackman with a closed mouth going left
+     */
+    method void drawClosedLeft() {
+        var Array sprite;
+        let sprite = Array.new(16);
+        let sprite[0] = 0;
+        let sprite[1] = 992;
+        let sprite[2] = 4088;
+        let sprite[3] = 8092;
+        let sprite[4] = 8094;
+        let sprite[5] = 16382;
+        let sprite[6] = 16383;
+        let sprite[7] = 16383;
+        let sprite[8] = 16382;
+        let sprite[9] = 16368;
+        let sprite[10] = 8190;
+        let sprite[11] = 8190;
+        let sprite[12] = 4088;
+        let sprite[13] = 992;
+        let sprite[14] = 0;
+        let sprite[15] = 0;
+
+        do Renderer.render(sprite, line, row);
+        do sprite.dispose();
+        return;
+    }
+
+    /**
      * Draws a hackman with an open mouth going up
      */
 	method void drawOpenUp() {
@@ -299,6 +382,62 @@ class Hackman {
         let sprite[6] = 15910;
         let sprite[7] = 16254;
         let sprite[8] = 16254;
+        let sprite[9] = 16382;
+        let sprite[10] = 8188;
+        let sprite[11] = 8188;
+        let sprite[12] = 4088;
+        let sprite[13] = 992;
+        let sprite[14] = 0;
+        let sprite[15] = 0;
+
+        do Renderer.render(sprite, line, row);
+        do sprite.dispose();
+        return;
+    }
+
+    /**
+     * Draws a hackman with an half-closed mouth going up
+     */
+    method void drawHalfClosedUp() {
+        var Array sprite;
+        let sprite = Array.new(16);
+        let sprite[0] = 0;
+        let sprite[1] = 0;
+        let sprite[2] = 3640;
+        let sprite[3] = 7740;
+        let sprite[4] = 8060;
+        let sprite[5] = 16230;
+        let sprite[6] = 16230;
+        let sprite[7] = 16382;
+        let sprite[8] = 16382;
+        let sprite[9] = 16382;
+        let sprite[10] = 8188;
+        let sprite[11] = 8188;
+        let sprite[12] = 4088;
+        let sprite[13] = 992;
+        let sprite[14] = 0;
+        let sprite[15] = 0;
+
+        do Renderer.render(sprite, line, row);
+        do sprite.dispose();
+        return;
+    }
+
+    /**
+     * Draws a hackman with a closed mouth going up
+     */
+    method void drawClosedUp() {
+        var Array sprite;
+        let sprite = Array.new(16);
+        let sprite[0] = 448;
+        let sprite[1] = 4080;
+        let sprite[2] = 4088;
+        let sprite[3] = 8188;
+        let sprite[4] = 8188;
+        let sprite[5] = 16358;
+        let sprite[6] = 16358;
+        let sprite[7] = 16382;
+        let sprite[8] = 16382;
         let sprite[9] = 16382;
         let sprite[10] = 8188;
         let sprite[11] = 8188;
@@ -334,6 +473,62 @@ class Hackman {
         let sprite[13] = 6192;
         let sprite[14] = 0;
         let sprite[15] = 0;
+
+        do Renderer.render(sprite, line, row);
+        do sprite.dispose();
+        return;
+    }
+
+    /*
+     * Draws a hackman with a half-closed mouth going down
+     */
+    method void drawHalfClosedDown() {
+        var Array sprite;
+        let sprite = Array.new(16);
+    	let sprite[0] = 0;
+    	let sprite[1] = 0;
+    	let sprite[2] = 1984;
+    	let sprite[3] = 8176;
+    	let sprite[4] = 16376;
+    	let sprite[5] = 16376;
+    	let sprite[6] = 32764;
+    	let sprite[7] = 32764;
+    	let sprite[8] = 32764;
+    	let sprite[9] = 26364;
+    	let sprite[10] = 26364;
+    	let sprite[11] = 16120;
+    	let sprite[12] = 15480;
+    	let sprite[13] = 7280;
+    	let sprite[14] = 0;
+    	let sprite[15] = 0;
+
+    	do Renderer.render(sprite, line, row);
+        do sprite.dispose();
+        return;
+    }
+
+    /*
+     * Draws a hackman with a closed mouth going down
+     */
+    method void drawClosedDown() {
+        var Array sprite;
+        let sprite = Array.new(16);
+        let sprite[0] = 0;
+        let sprite[1] = 0;
+        let sprite[2] = 1984;
+        let sprite[3] = 8176;
+        let sprite[4] = 16376;
+        let sprite[5] = 16376;
+        let sprite[6] = 32764;
+        let sprite[7] = 32764;
+        let sprite[8] = 32764;
+        let sprite[9] = 26620;
+        let sprite[10] = 26620;
+        let sprite[11] = 16376;
+        let sprite[12] = 16376;
+        let sprite[13] = 8176;
+        let sprite[14] = 4080;
+        let sprite[15] = 896;
 
         do Renderer.render(sprite, line, row);
         do sprite.dispose();

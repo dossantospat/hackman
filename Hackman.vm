@@ -47,61 +47,83 @@ call Hackman.stopMoving 1
 pop temp 0
 label IF_FALSE2
 push pointer 0
-call Hackman.drawOpenUp 1
-pop temp 0
-label IF_FALSE1
-push pointer 0
-call Hackman.isFacingRight 1
+call Hackman.isOpenMouthed 1
 if-goto IF_TRUE3
 goto IF_FALSE3
 label IF_TRUE3
-push this 3
-push constant 1
-add
-pop this 3
-push this 3
-push constant 31
-gt
+push pointer 0
+call Hackman.drawOpenUp 1
+pop temp 0
+goto IF_END3
+label IF_FALSE3
+push pointer 0
+call Hackman.isHalfClosedMouthed 1
 if-goto IF_TRUE4
 goto IF_FALSE4
 label IF_TRUE4
+push pointer 0
+call Hackman.drawHalfClosedUp 1
+pop temp 0
+goto IF_END4
+label IF_FALSE4
+push pointer 0
+call Hackman.drawClosedUp 1
+pop temp 0
+label IF_END4
+label IF_END3
+label IF_FALSE1
+push pointer 0
+call Hackman.isFacingRight 1
+if-goto IF_TRUE5
+goto IF_FALSE5
+label IF_TRUE5
+push this 3
+push constant 1
+add
+pop this 3
+push this 3
+push constant 31
+gt
+if-goto IF_TRUE6
+goto IF_FALSE6
+label IF_TRUE6
 push constant 31
 pop this 3
 push pointer 0
 call Hackman.stopMoving 1
 pop temp 0
-label IF_FALSE4
-push pointer 0
-call Hackman.isOpenMouthed 1
-if-goto IF_TRUE5
-goto IF_FALSE5
-label IF_TRUE5
-push pointer 0
-call Hackman.drawOpenRight 1
-pop temp 0
-goto IF_END5
-label IF_FALSE5
-push pointer 0
-call Hackman.isHalfClosedMouthed 1
-if-goto IF_TRUE6
-goto IF_FALSE6
-label IF_TRUE6
-push pointer 0
-call Hackman.drawHalfClosedRight 1
-pop temp 0
-goto IF_END6
 label IF_FALSE6
 push pointer 0
-call Hackman.drawClosedRight 1
-pop temp 0
-label IF_END6
-label IF_END5
-label IF_FALSE3
-push pointer 0
-call Hackman.isFacingBottom 1
+call Hackman.isOpenMouthed 1
 if-goto IF_TRUE7
 goto IF_FALSE7
 label IF_TRUE7
+push pointer 0
+call Hackman.drawOpenRight 1
+pop temp 0
+goto IF_END7
+label IF_FALSE7
+push pointer 0
+call Hackman.isHalfClosedMouthed 1
+if-goto IF_TRUE8
+goto IF_FALSE8
+label IF_TRUE8
+push pointer 0
+call Hackman.drawHalfClosedRight 1
+pop temp 0
+goto IF_END8
+label IF_FALSE8
+push pointer 0
+call Hackman.drawClosedRight 1
+pop temp 0
+label IF_END8
+label IF_END7
+label IF_FALSE5
+push pointer 0
+call Hackman.isFacingBottom 1
+if-goto IF_TRUE9
+goto IF_FALSE9
+label IF_TRUE9
 push this 2
 push constant 1
 add
@@ -109,24 +131,46 @@ pop this 2
 push this 2
 push constant 15
 gt
-if-goto IF_TRUE8
-goto IF_FALSE8
-label IF_TRUE8
+if-goto IF_TRUE10
+goto IF_FALSE10
+label IF_TRUE10
 push constant 15
 pop this 2
 push pointer 0
 call Hackman.stopMoving 1
 pop temp 0
-label IF_FALSE8
+label IF_FALSE10
+push pointer 0
+call Hackman.isOpenMouthed 1
+if-goto IF_TRUE11
+goto IF_FALSE11
+label IF_TRUE11
 push pointer 0
 call Hackman.drawOpenDown 1
 pop temp 0
-label IF_FALSE7
+goto IF_END11
+label IF_FALSE11
+push pointer 0
+call Hackman.isHalfClosedMouthed 1
+if-goto IF_TRUE12
+goto IF_FALSE12
+label IF_TRUE12
+push pointer 0
+call Hackman.drawHalfClosedDown 1
+pop temp 0
+goto IF_END12
+label IF_FALSE12
+push pointer 0
+call Hackman.drawClosedDown 1
+pop temp 0
+label IF_END12
+label IF_END11
+label IF_FALSE9
 push pointer 0
 call Hackman.isFacingLeft 1
-if-goto IF_TRUE9
-goto IF_FALSE9
-label IF_TRUE9
+if-goto IF_TRUE13
+goto IF_FALSE13
+label IF_TRUE13
 push this 3
 push constant 1
 sub
@@ -134,19 +178,41 @@ pop this 3
 push this 3
 push constant 0
 lt
-if-goto IF_TRUE10
-goto IF_FALSE10
-label IF_TRUE10
+if-goto IF_TRUE14
+goto IF_FALSE14
+label IF_TRUE14
 push constant 0
 pop this 3
 push pointer 0
 call Hackman.stopMoving 1
 pop temp 0
-label IF_FALSE10
+label IF_FALSE14
+push pointer 0
+call Hackman.isOpenMouthed 1
+if-goto IF_TRUE15
+goto IF_FALSE15
+label IF_TRUE15
 push pointer 0
 call Hackman.drawOpenLeft 1
 pop temp 0
-label IF_FALSE9
+goto IF_END15
+label IF_FALSE15
+push pointer 0
+call Hackman.isHalfClosedMouthed 1
+if-goto IF_TRUE16
+goto IF_FALSE16
+label IF_TRUE16
+push pointer 0
+call Hackman.drawHalfClosedLeft 1
+pop temp 0
+goto IF_END16
+label IF_FALSE16
+push pointer 0
+call Hackman.drawClosedLeft 1
+pop temp 0
+label IF_END16
+label IF_END15
+label IF_FALSE13
 label IF_FALSE0
 push pointer 0
 call Hackman.nextAnimation 1
@@ -1000,6 +1066,294 @@ call Array.dispose 1
 pop temp 0
 push constant 0
 return
+function Hackman.drawHalfClosedLeft 1
+push argument 0
+pop pointer 0
+push constant 16
+call Array.new 1
+pop local 0
+push constant 0
+push local 0
+add
+push constant 0
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 1
+push local 0
+add
+push constant 992
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 2
+push local 0
+add
+push constant 4088
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 3
+push local 0
+add
+push constant 8092
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 4
+push local 0
+add
+push constant 8092
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 5
+push local 0
+add
+push constant 16380
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 6
+push local 0
+add
+push constant 16368
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 7
+push local 0
+add
+push constant 16256
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 8
+push local 0
+add
+push constant 16368
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 9
+push local 0
+add
+push constant 16380
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 10
+push local 0
+add
+push constant 8188
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 11
+push local 0
+add
+push constant 8188
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 12
+push local 0
+add
+push constant 4088
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 13
+push local 0
+add
+push constant 992
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 14
+push local 0
+add
+push constant 0
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 15
+push local 0
+add
+push constant 0
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push local 0
+push this 2
+push this 3
+call Renderer.render 3
+pop temp 0
+push local 0
+call Array.dispose 1
+pop temp 0
+push constant 0
+return
+function Hackman.drawClosedLeft 1
+push argument 0
+pop pointer 0
+push constant 16
+call Array.new 1
+pop local 0
+push constant 0
+push local 0
+add
+push constant 0
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 1
+push local 0
+add
+push constant 992
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 2
+push local 0
+add
+push constant 4088
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 3
+push local 0
+add
+push constant 8092
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 4
+push local 0
+add
+push constant 8094
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 5
+push local 0
+add
+push constant 16382
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 6
+push local 0
+add
+push constant 16383
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 7
+push local 0
+add
+push constant 16383
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 8
+push local 0
+add
+push constant 16382
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 9
+push local 0
+add
+push constant 16368
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 10
+push local 0
+add
+push constant 8190
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 11
+push local 0
+add
+push constant 8190
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 12
+push local 0
+add
+push constant 4088
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 13
+push local 0
+add
+push constant 992
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 14
+push local 0
+add
+push constant 0
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 15
+push local 0
+add
+push constant 0
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push local 0
+push this 2
+push this 3
+call Renderer.render 3
+pop temp 0
+push local 0
+call Array.dispose 1
+pop temp 0
+push constant 0
+return
 function Hackman.drawOpenUp 1
 push argument 0
 pop pointer 0
@@ -1074,6 +1428,294 @@ push constant 8
 push local 0
 add
 push constant 16254
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 9
+push local 0
+add
+push constant 16382
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 10
+push local 0
+add
+push constant 8188
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 11
+push local 0
+add
+push constant 8188
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 12
+push local 0
+add
+push constant 4088
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 13
+push local 0
+add
+push constant 992
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 14
+push local 0
+add
+push constant 0
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 15
+push local 0
+add
+push constant 0
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push local 0
+push this 2
+push this 3
+call Renderer.render 3
+pop temp 0
+push local 0
+call Array.dispose 1
+pop temp 0
+push constant 0
+return
+function Hackman.drawHalfClosedUp 1
+push argument 0
+pop pointer 0
+push constant 16
+call Array.new 1
+pop local 0
+push constant 0
+push local 0
+add
+push constant 0
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 1
+push local 0
+add
+push constant 0
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 2
+push local 0
+add
+push constant 3640
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 3
+push local 0
+add
+push constant 7740
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 4
+push local 0
+add
+push constant 8060
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 5
+push local 0
+add
+push constant 16230
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 6
+push local 0
+add
+push constant 16230
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 7
+push local 0
+add
+push constant 16382
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 8
+push local 0
+add
+push constant 16382
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 9
+push local 0
+add
+push constant 16382
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 10
+push local 0
+add
+push constant 8188
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 11
+push local 0
+add
+push constant 8188
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 12
+push local 0
+add
+push constant 4088
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 13
+push local 0
+add
+push constant 992
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 14
+push local 0
+add
+push constant 0
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 15
+push local 0
+add
+push constant 0
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push local 0
+push this 2
+push this 3
+call Renderer.render 3
+pop temp 0
+push local 0
+call Array.dispose 1
+pop temp 0
+push constant 0
+return
+function Hackman.drawClosedUp 1
+push argument 0
+pop pointer 0
+push constant 16
+call Array.new 1
+pop local 0
+push constant 0
+push local 0
+add
+push constant 448
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 1
+push local 0
+add
+push constant 4080
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 2
+push local 0
+add
+push constant 4088
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 3
+push local 0
+add
+push constant 8188
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 4
+push local 0
+add
+push constant 8188
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 5
+push local 0
+add
+push constant 16358
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 6
+push local 0
+add
+push constant 16358
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 7
+push local 0
+add
+push constant 16382
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 8
+push local 0
+add
+push constant 16382
 pop temp 0
 pop pointer 1
 push temp 0
@@ -1274,6 +1916,294 @@ push constant 15
 push local 0
 add
 push constant 0
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push local 0
+push this 2
+push this 3
+call Renderer.render 3
+pop temp 0
+push local 0
+call Array.dispose 1
+pop temp 0
+push constant 0
+return
+function Hackman.drawHalfClosedDown 1
+push argument 0
+pop pointer 0
+push constant 16
+call Array.new 1
+pop local 0
+push constant 0
+push local 0
+add
+push constant 0
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 1
+push local 0
+add
+push constant 0
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 2
+push local 0
+add
+push constant 1984
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 3
+push local 0
+add
+push constant 8176
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 4
+push local 0
+add
+push constant 16376
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 5
+push local 0
+add
+push constant 16376
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 6
+push local 0
+add
+push constant 32764
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 7
+push local 0
+add
+push constant 32764
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 8
+push local 0
+add
+push constant 32764
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 9
+push local 0
+add
+push constant 26364
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 10
+push local 0
+add
+push constant 26364
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 11
+push local 0
+add
+push constant 16120
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 12
+push local 0
+add
+push constant 15480
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 13
+push local 0
+add
+push constant 7280
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 14
+push local 0
+add
+push constant 0
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 15
+push local 0
+add
+push constant 0
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push local 0
+push this 2
+push this 3
+call Renderer.render 3
+pop temp 0
+push local 0
+call Array.dispose 1
+pop temp 0
+push constant 0
+return
+function Hackman.drawClosedDown 1
+push argument 0
+pop pointer 0
+push constant 16
+call Array.new 1
+pop local 0
+push constant 0
+push local 0
+add
+push constant 0
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 1
+push local 0
+add
+push constant 0
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 2
+push local 0
+add
+push constant 1984
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 3
+push local 0
+add
+push constant 8176
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 4
+push local 0
+add
+push constant 16376
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 5
+push local 0
+add
+push constant 16376
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 6
+push local 0
+add
+push constant 32764
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 7
+push local 0
+add
+push constant 32764
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 8
+push local 0
+add
+push constant 32764
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 9
+push local 0
+add
+push constant 26620
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 10
+push local 0
+add
+push constant 26620
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 11
+push local 0
+add
+push constant 16376
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 12
+push local 0
+add
+push constant 16376
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 13
+push local 0
+add
+push constant 8176
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 14
+push local 0
+add
+push constant 4080
+pop temp 0
+pop pointer 1
+push temp 0
+pop that 0
+push constant 15
+push local 0
+add
+push constant 896
 pop temp 0
 pop pointer 1
 push temp 0

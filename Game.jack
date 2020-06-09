@@ -20,7 +20,7 @@ class Game {
 
       while (~exit) {
          do hackman.render();
-         let key = Game.wait(100);
+         let key = Game.wait(200);
          if (key = 81)  { let exit = true; }     // q key
          if (key = 131) { do hackman.goUp(); }   // up arrow
          if (key = 133) { do hackman.goDown(); }   // down arrow

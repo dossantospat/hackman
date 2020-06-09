@@ -21,7 +21,7 @@ if-goto WHILE_END0
 push this 0
 call Hackman.render 1
 pop temp 0
-push constant 100
+push constant 200
 call Game.wait 1
 pop local 0
 push local 0
