@@ -1,0 +1,95 @@
+class Renderer {
+    function int getBlockMemoryAddress(int line, int row) {
+        var int fixedLine, fixedRow;
+        let fixedLine = line;
+        let fixedRow = row;
+
+        if (line < 0) {
+            let fixedLine = 0;
+        }
+        if(line > 15) {
+            let fixedLine = 15;
+        }
+        if (row < 0) {
+            let fixedRow = 0;
+        }
+        if(row > 31) {
+            let fixedRow = 31;
+        }
+
+        return 16384 + fixedRow + (fixedLine * 512);
+    }
+
+    function void render(Array sprite, int line, int row) {
+        var int memAddress;
+        let memAddress = Renderer.getBlockMemoryAddress(line, row);
+        do Memory.poke(memAddress+0, sprite[0]);
+        do Memory.poke(memAddress+32, sprite[1]);
+        do Memory.poke(memAddress+64, sprite[2]);
+        do Memory.poke(memAddress+96, sprite[3]);
+        do Memory.poke(memAddress+128, sprite[4]);
+        do Memory.poke(memAddress+160, sprite[5]);
+        do Memory.poke(memAddress+192, sprite[6]);
+        do Memory.poke(memAddress+224, sprite[7]);
+        do Memory.poke(memAddress+256, sprite[8]);
+        do Memory.poke(memAddress+288, sprite[9]);
+        do Memory.poke(memAddress+320, sprite[10]);
+        do Memory.poke(memAddress+352, sprite[11]);
+        do Memory.poke(memAddress+384, sprite[12]);
+        do Memory.poke(memAddress+416, sprite[13]);
+        do Memory.poke(memAddress+448, sprite[14]);
+        do Memory.poke(memAddress+480, sprite[15]);
+        return;
+    }
+
+    function void drawGum(int line, int row) {
+        var Array sprite;
+        let sprite = Array.new(16);
+        let sprite[0] = 0;
+        let sprite[1] = 0;
+        let sprite[2] = 0;
+        let sprite[3] = 0;
+        let sprite[4] = 0;
+        let sprite[5] = 384;
+        let sprite[6] = 960;
+        let sprite[7] = 2016;
+        let sprite[8] = 2016;
+        let sprite[9] = 960;
+        let sprite[10] = 384;
+        let sprite[11] = 0;
+        let sprite[12] = 0;
+        let sprite[13] = 0;
+        let sprite[14] = 0;
+        let sprite[15] = 0;
+
+        do Renderer.render(sprite, line, row);
+        do sprite.dispose();
+        return;
+    }
+
+
+    function void drawMagicGum(int line, int row) {
+        var Array sprite;
+        let sprite = Array.new(16);
+        let sprite[0] = 0;
+        let sprite[1] = 960;
+        let sprite[2] = 2016;
+        let sprite[3] = 4080;
+        let sprite[4] = 8184;
+        let sprite[5] = 16380;
+        let sprite[6] = 32766;
+        let sprite[7] = 32766;
+        let sprite[8] = 32766;
+        let sprite[9] = 32766;
+        let sprite[10] = 32766;
+        let sprite[11] = 16380;
+        let sprite[12] = 8184;
+        let sprite[13] = 2016;
+        let sprite[14] = 960;
+        let sprite[15] = 0;
+
+        do Renderer.render(sprite, line, row);
+        do sprite.dispose();
+        return;
+    }
+}

@@ -1,0 +1,348 @@
+class Hackman {
+    // Direction towards which the hackman is facing.
+    // 0: top, 1: right, 2: bottom, 3: left
+    field int direction;
+    // Animation step of the Hackman
+    // 0: open mouthed, 1: half closed mouthed, 2: closed mouthed
+    field int animationStep;
+    // Vertical Position of the hackman
+    field int line;
+    // Horizontal position of the hackman
+    field int row;
+    // Determines if the hackman should be moving or not
+    field boolean isMoving;
+
+    //Builds a Hackman instance
+    constructor Hackman new(int aLine, int aRow) {
+      let direction = 1;
+      let line = aLine;
+      let aRow = aRow;
+      let isMoving = false;
+
+      do drawOpenRight();
+      return this;
+    }
+
+
+    /**
+     * Renders the hackman on the screen
+     *
+     * This method is responsible for updating the physics and the rendering
+     */
+    method void render() {
+        if(isMoving) {
+            do erase();
+
+            if(isFacingTop()) {
+                let line = line - 1;
+                if(line < 0) {
+                    let line = 0;
+                    do stopMoving();
+                }
+                do drawOpenUp();
+            }
+            if(isFacingRight()) {
+                let row = row + 1;
+                if(row > 31) {
+                    let row = 31;
+                    do stopMoving();
+                }
+                if(isOpenMouthed()) {
+                    do drawOpenRight();
+                } else {
+                    if(isHalfClosedMouthed()) {
+                        do drawHalfClosedRight();
+                    } else {
+                        do drawClosedRight();
+                    }
+                }
+            }
+            if(isFacingBottom()) {
+                let line = line + 1;
+                if(line > 15) {
+                    let line = 15;
+                    do stopMoving();
+                }
+                do drawOpenDown();
+            }
+            if(isFacingLeft()) {
+                let row  = row - 1;
+                if(row < 0) {
+                    let row = 0;
+                    do stopMoving();
+                }
+                do drawOpenLeft();
+            }
+        }
+        do nextAnimation();
+        return;
+    }
+
+    method void startMoving() {
+        let isMoving = true;
+        return;
+    }
+
+    method void stopMoving() {
+        let isMoving = false;
+        return;
+    }
+
+    method boolean isFacingTop() {
+        return (direction = 0);
+    }
+
+    method boolean isFacingRight() {
+        return (direction = 1);
+    }
+
+    method boolean isFacingBottom() {
+        return (direction = 2);
+    }
+
+    method boolean isFacingLeft() {
+        return (direction = 3);
+    }
+
+    method boolean isOpenMouthed() {
+        return (animationStep = 0);
+    }
+
+    method boolean isClosedMouthed() {
+        return (animationStep = 2);
+    }
+
+    method boolean isHalfClosedMouthed() {
+        return (animationStep = 1);
+    }
+
+    method void nextAnimation() {
+        if (animationStep = 2) {
+            let animationStep = 0;
+        } else {
+            let animationStep = animationStep + 1;
+        }
+        return;
+    }
+
+    method void goUp() {
+        do startMoving();
+        let direction = 0;
+        return;
+    }
+
+    method void goRight() {
+        do startMoving();
+        let direction = 1;
+        return;
+    }
+
+    method void goDown() {
+        do startMoving();
+        let direction = 2;
+        return;
+    }
+
+    method void goLeft() {
+        do startMoving();
+        let direction = 3;
+        return;
+    }
+
+    method void erase() {
+        var Array sprite;
+        let sprite = Array.new(16);
+        let sprite[0] = 0;
+        let sprite[1] = 0;
+        let sprite[2] = 0;
+        let sprite[3] = 0;
+        let sprite[4] = 0;
+        let sprite[5] = 0;
+        let sprite[6] = 0;
+        let sprite[7] = 0;
+        let sprite[8] = 0;
+        let sprite[9] = 0;
+        let sprite[10] = 0;
+        let sprite[11] = 0;
+        let sprite[12] = 0;
+        let sprite[13] = 0;
+        let sprite[14] = 0;
+        let sprite[15] = 0;
+
+        do Renderer.render(sprite, line, row);
+        do sprite.dispose();
+        return;
+    }
+
+    /**
+     * Draws hackman with an open mouth going right.
+     */
+    method void drawOpenRight() {
+        var Array sprite;
+        let sprite = Array.new(16);
+        let sprite[0] = 0;
+        let sprite[1] = 1984;
+        let sprite[2] = 8176;
+        let sprite[3] = 14840;
+        let sprite[4] = 14840;
+        let sprite[5] = 4092;
+        let sprite[6] = 508;
+        let sprite[7] = 124;
+        let sprite[8] = 508;
+        let sprite[9] = 4092;
+        let sprite[10] = 16376;
+        let sprite[11] = 16376;
+        let sprite[12] = 8176;
+        let sprite[13] = 1984;
+        let sprite[14] = 0;
+        let sprite[15] = 0;
+
+        do Renderer.render(sprite, line, row);
+        do sprite.dispose();
+        return;
+	}
+
+    method void drawHalfClosedRight() {
+        var Array sprite;
+        let sprite = Array.new(16);
+    	let sprite[0] = 0;
+    	let sprite[1] = 1984;
+    	let sprite[2] = 8176;
+    	let sprite[3] = 14840;
+    	let sprite[4] = 14840;
+    	let sprite[5] = 16380;
+    	let sprite[6] = 4092;
+    	let sprite[7] = 508;
+    	let sprite[8] = 4092;
+    	let sprite[9] = 16380;
+    	let sprite[10] = 16376;
+    	let sprite[11] = 16376;
+    	let sprite[12] = 8176;
+    	let sprite[13] = 1984;
+    	let sprite[14] = 0;
+    	let sprite[15] = 0;
+
+    	do Renderer.render(sprite, line, row);
+        do sprite.dispose();
+        return;
+    }
+
+    /**
+     * Draws hackman with a closed mouth going right.
+     */
+	method void drawClosedRight() {
+	    var Array sprite;
+        let sprite = Array.new(16);
+		let sprite[0] = 0;
+    	let sprite[1] = 1984;
+    	let sprite[2] = 8176;
+    	let sprite[3] = 14840;
+    	let sprite[4] = 31224;
+    	let sprite[5] = 32764;
+    	let sprite[6] = -4;
+    	let sprite[7] = -4;
+    	let sprite[8] = -4;
+    	let sprite[9] = 32764;
+    	let sprite[10] = 32760;
+    	let sprite[11] = 32760;
+    	let sprite[12] = 8176;
+    	let sprite[13] = 1984;
+    	let sprite[14] = 0;
+    	let sprite[15] = 0;
+
+    	do Renderer.render(sprite, line, row);
+        do sprite.dispose();
+        return;
+	}
+
+
+    /**
+     * Draws a hackman with an open mouth going left
+     */
+	method void drawOpenLeft() {
+	    var Array sprite;
+        let sprite = Array.new(16);
+        let sprite[0] = 0;
+        let sprite[1] = 992;
+        let sprite[2] = 4088;
+        let sprite[3] = 8092;
+        let sprite[4] = 8092;
+        let sprite[5] = 16368;
+        let sprite[6] = 16256;
+        let sprite[7] = 15872;
+        let sprite[8] = 16256;
+        let sprite[9] = 16368;
+        let sprite[10] = 8188;
+        let sprite[11] = 8188;
+        let sprite[12] = 4088;
+        let sprite[13] = 992;
+        let sprite[14] = 0;
+        let sprite[15] = 0;
+
+        do Renderer.render(sprite, line, row);
+        do sprite.dispose();
+        return;
+	}
+
+    /**
+     * Draws a hackman with an open mouth going up
+     */
+	method void drawOpenUp() {
+	    var Array sprite;
+	    let sprite = Array.new(16);
+        let sprite[0] = 0;
+        let sprite[1] = 0;
+        let sprite[2] = 3096;
+        let sprite[3] = 7196;
+        let sprite[4] = 7740;
+        let sprite[5] = 15910;
+        let sprite[6] = 15910;
+        let sprite[7] = 16254;
+        let sprite[8] = 16254;
+        let sprite[9] = 16382;
+        let sprite[10] = 8188;
+        let sprite[11] = 8188;
+        let sprite[12] = 4088;
+        let sprite[13] = 992;
+        let sprite[14] = 0;
+        let sprite[15] = 0;
+
+        do Renderer.render(sprite, line, row);
+        do sprite.dispose();
+        return;
+    }
+
+    /*
+     * Draws a hackman with an open mouth going down
+     */
+    method void drawOpenDown() {
+        var Array sprite;
+        let sprite = Array.new(16);
+        let sprite[0] = 0;
+        let sprite[1] = 0;
+        let sprite[2] = 1984;
+        let sprite[3] = 8176;
+        let sprite[4] = 16376;
+        let sprite[5] = 16376;
+        let sprite[6] = 32764;
+        let sprite[7] = 32508;
+        let sprite[8] = 32508;
+        let sprite[9] = 25724;
+        let sprite[10] = 25724;
+        let sprite[11] = 15480;
+        let sprite[12] = 14392;
+        let sprite[13] = 6192;
+        let sprite[14] = 0;
+        let sprite[15] = 0;
+
+        do Renderer.render(sprite, line, row);
+        do sprite.dispose();
+        return;
+    }
+
+   /** Disposes this game. */
+   method void dispose() {
+      do Memory.deAlloc(this);
+      return;
+   }
+}

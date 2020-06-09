@@ -1,0 +1,16 @@
+/**
+ * Entry point of the hackman game.
+ * This class is responsible for initializing the game and running it.
+ */
+class Main {
+    function void main() {
+        //Create a Game instance and run it
+        var Game game;
+        let game = Game.new();
+        do game.run();
+
+        //Clean everything and quit
+        do game.dispose();
+        return;
+    }
+}

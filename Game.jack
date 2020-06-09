@@ -1,0 +1,66 @@
+/**
+ * This class runs the main game loop
+ */
+class Game {
+
+   // Our hackman character
+   field Hackman hackman;
+
+   // Builds a Game instance with a fresh Hackman
+   constructor Game new() {
+     let hackman = Hackman.new(0, 0);
+     return this;
+   }
+
+   /** Runs the game: handles the user's inputs and moves the Hackman accordingly */
+   method void run() {
+      var char key;  // the key currently pressed by the user
+      var boolean exit;
+      let exit = false;
+
+      while (~exit) {
+         do hackman.render();
+         let key = Game.wait(100);
+         if (key = 81)  { let exit = true; }     // q key
+         if (key = 131) { do hackman.goUp(); }   // up arrow
+         if (key = 133) { do hackman.goDown(); }   // down arrow
+         if (key = 130) { do hackman.goLeft(); }   // left arrow
+         if (key = 132) { do hackman.goRight(); }   // right arrow
+     } // while
+
+
+     // Prints a "Game Over" message before quitting the program
+     do Output.moveCursor(10,27);
+     do Output.printString("Game Over");
+
+     return;
+   }
+
+   /** Disposes this game. */
+  method void dispose() {
+     do Memory.deAlloc(this);
+     do hackman.dispose();
+     return;
+  }
+
+  /** Custom wait function that listens to the keyboard. */
+  function char wait(int duration) {
+     var int i, j;
+     var char key, rememberedKey;
+     let key = 0;
+     let rememberedKey = 0;
+     let i = 0;
+     while( i < duration ) {
+         let j = 0;
+         while( j < 10 ) {
+             let j = j + 1;
+             let key = Keyboard.keyPressed();
+             if(~(key = 0)) {
+                 let rememberedKey = key;
+             }
+         }
+         let i = i + 1;
+     }
+     return rememberedKey;
+  }
+}
