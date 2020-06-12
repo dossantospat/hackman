@@ -5,10 +5,13 @@ class Game {
 
    // Our hackman character
    field Hackman hackman;
+   field Map map;
 
    // Builds a Game instance with a fresh Hackman
    constructor Game new() {
-     let hackman = Hackman.new(0, 0);
+     let map = Map.new();
+     let hackman = Hackman.new(10, 10, map);
+
      return this;
    }
 
@@ -17,10 +20,11 @@ class Game {
       var char key;  // the key currently pressed by the user
       var boolean exit;
       let exit = false;
-
+      do map.render();
       while (~exit) {
+         do hackman.move();
          do hackman.render();
-         let key = Game.wait(200);
+         let key = Game.wait(300);
          if (key = 81)  { let exit = true; }     // q key
          if (key = 131) { do hackman.goUp(); }   // up arrow
          if (key = 133) { do hackman.goDown(); }   // down arrow
@@ -30,6 +34,7 @@ class Game {
 
 
      // Prints a "Game Over" message before quitting the program
+     do Screen.clearScreen();
      do Output.moveCursor(10,27);
      do Output.printString("Game Over");
 
@@ -38,8 +43,10 @@ class Game {
 
    /** Disposes this game. */
   method void dispose() {
-     do Memory.deAlloc(this);
      do hackman.dispose();
+     do map.dispose();
+     do Memory.deAlloc(this);
+
      return;
   }
 

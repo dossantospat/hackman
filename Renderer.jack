@@ -7,8 +7,8 @@ class Renderer {
         if (line < 0) {
             let fixedLine = 0;
         }
-        if(line > 15) {
-            let fixedLine = 15;
+        if(line > 11) {
+            let fixedLine = 11;
         }
         if (row < 0) {
             let fixedRow = 0;
@@ -17,7 +17,7 @@ class Renderer {
             let fixedRow = 31;
         }
 
-        return 16384 + fixedRow + (fixedLine * 512);
+        return 16384 + fixedRow + ((fixedLine + 4) * 512);
     }
 
     function void render(Array sprite, int line, int row) {

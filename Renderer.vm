@@ -13,12 +13,12 @@ push constant 0
 pop local 0
 label IF_FALSE0
 push argument 0
-push constant 15
+push constant 11
 gt
 if-goto IF_TRUE1
 goto IF_FALSE1
 label IF_TRUE1
-push constant 15
+push constant 11
 pop local 0
 label IF_FALSE1
 push argument 1
@@ -43,6 +43,8 @@ push constant 16384
 push local 1
 add
 push local 0
+push constant 4
+add
 push constant 512
 call Math.multiply 2
 add

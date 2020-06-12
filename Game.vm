@@ -1,10 +1,13 @@
 function Game.new 0
-push constant 1
+push constant 2
 call Memory.alloc 1
 pop pointer 0
-push constant 0
-push constant 0
-call Hackman.new 2
+call Map.new 0
+pop this 1
+push constant 10
+push constant 10
+push this 1
+call Hackman.new 3
 pop this 0
 push pointer 0
 return
@@ -13,15 +16,21 @@ push argument 0
 pop pointer 0
 push constant 0
 pop local 1
+push this 1
+call Map.render 1
+pop temp 0
 label WHILE_EXP0
 push local 1
 not
 not
 if-goto WHILE_END0
 push this 0
+call Hackman.move 1
+pop temp 0
+push this 0
 call Hackman.render 1
 pop temp 0
-push constant 200
+push constant 300
 call Game.wait 1
 pop local 0
 push local 0
@@ -76,6 +85,8 @@ pop temp 0
 label IF_FALSE4
 goto WHILE_EXP0
 label WHILE_END0
+call Screen.clearScreen 0
+pop temp 0
 push constant 10
 push constant 27
 call Output.moveCursor 2
@@ -107,11 +118,14 @@ return
 function Game.dispose 0
 push argument 0
 pop pointer 0
-push pointer 0
-call Memory.deAlloc 1
-pop temp 0
 push this 0
 call Hackman.dispose 1
+pop temp 0
+push this 1
+call Map.dispose 1
+pop temp 0
+push pointer 0
+call Memory.deAlloc 1
 pop temp 0
 push constant 0
 return

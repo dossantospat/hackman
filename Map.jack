@@ -1,0 +1,304 @@
+/**
+ * The game's map.
+ * The maps consists of 32 columns and 16 rows.
+ *
+ * In a hackman map, we encounter the following blocks :
+ * - 0 : Zeros (that Hackman must eat)
+ * - 1 : Ones (that make Hackman invicible)
+ * - 2 : Hackman starting point
+ * - 3,4,5 : Phantogates starting points (prison)
+ * - 6: Walls
+ * - 99: Empty block
+ */
+class Map {
+
+   // Our hackman character
+   field Array lines;
+   static int NB_LINES;
+   static int NB_ROWS;
+
+   // Builds a Game instance with a fresh Hackman
+    constructor Map new() {
+        var int currentX;
+        var Array row;
+        let currentX = 0;
+
+        let NB_LINES = 12;
+        let NB_ROWS = 32;
+
+        let lines = Array.new(NB_LINES);
+        while(currentX < NB_LINES) {
+            let lines[currentX] = Array.new(NB_ROWS);
+            let currentX = currentX + 1;
+        }
+
+        let row = lines[0];
+        let row[0] = 6;
+        let row[1] = 6;
+        let row[2] = 6;
+        let row[3] = 6;
+        let row[4] = 6;
+        let row[5] = 6;
+        let row[6] = 6;
+        let row[7] = 6;
+        let row[8] = 6;
+        let row[9] = 6;
+        let row[10] = 0;
+        let row[11] = 0;
+        let row[12] = 0;
+        let row[13] = 6;
+        let row[14] = 6;
+        let row[15] = 6;
+        let row[16] = 6;
+        let row[17] = 6;
+        let row[18] = 6;
+        let row[19] = 6;
+        let row[20] = 6;
+        let row[21] = 6;
+        let row[22] = 6;
+        let row[23] = 6;
+        let row[24] = 6;
+        let row[25] = 6;
+        let row[26] = 6;
+        let row[27] = 6;
+        let row[28] = 6;
+        let row[29] = 6;
+        let row[30] = 6;
+        let row[31] = 6;
+
+        let row = lines[1];
+        let row[0] = 6;
+        let row[1] = 1;
+        let row[30] = 1;
+        let row[31] = 6;
+
+        let row = lines[2];
+        let row[0] = 6;
+        let row[31] = 6;
+
+        let row = lines[3];
+        let row[0] = 6;
+        let row[1] = 6;
+        let row[2] = 6;
+        let row[5] = 6;
+        let row[7] = 6;
+        let row[31] = 6;
+
+        let row = lines[4];
+        let row[0] = 6;
+        let row[31] = 6;
+
+        let row = lines[5];
+        let row[0] = 6;
+        let row[31] = 6;
+
+        let row = lines[6];
+        let row[0] = 6;
+        let row[31] = 6;
+
+        let row = lines[7];
+        let row[0] = 6;
+        let row[31] = 6;
+
+        let row = lines[8];
+        let row[0] = 6;
+        let row[0] = 6;
+        let row[10] = 6;
+        let row[12] = 6;
+        let row[13] = 6;
+        let row[15] = 6;
+        let row[31] = 6;
+
+        let row = lines[9];
+        let row[0] = 6;
+        let row[31] = 6;
+
+        let row = lines[10];
+        let row[0] = 6;
+        let row[31] = 6;
+
+        let row = lines[11];
+        let row[0] = 6;
+        let row[1] = 6;
+        let row[2] = 6;
+        let row[3] = 6;
+        let row[4] = 6;
+        let row[5] = 6;
+        let row[6] = 6;
+        let row[7] = 6;
+        let row[8] = 6;
+        let row[9] = 6;
+        let row[10] = 6;
+        let row[11] = 6;
+        let row[12] = 6;
+        let row[13] = 6;
+        let row[14] = 6;
+        let row[15] = 6;
+        let row[16] = 6;
+        let row[17] = 6;
+        let row[18] = 6;
+        let row[19] = 6;
+        let row[20] = 6;
+        let row[21] = 0;
+        let row[22] = 0;
+        let row[23] = 0;
+        let row[24] = 6;
+        let row[25] = 6;
+        let row[26] = 6;
+        let row[27] = 6;
+        let row[28] = 6;
+        let row[29] = 6;
+        let row[30] = 6;
+        let row[31] = 6;
+
+        return this;
+    }
+
+    /*
+     * Draws hackman with an open mouth going right.
+     */
+    method void render() {
+       var int currentX, currentY;
+       var Array row;
+
+       let currentX = 0;
+       while(currentX < NB_LINES) {
+           let currentY = 0;
+           let row = lines[currentX];
+           while(currentY < NB_ROWS) {
+             if(row[currentY] = 0) {
+                do drawZero(currentX, currentY);
+             }
+             if(row[currentY] = 1) {
+                do drawOne(currentX, currentY);
+             }
+             if(row[currentY] = 6) {
+                do drawWall(currentX, currentY);
+             }
+             let currentY = currentY + 1;
+           }
+           let currentX = currentX + 1;
+       }
+
+       return;
+   	}
+
+   	method boolean checkForWall(int row, int line) {
+   	    var boolean isAWall;
+   	    var int cell;
+   	    var Array selectedRow;
+
+        let isAWall = false;
+        if((~(row < 0)) & (row < NB_ROWS) & (~(line < 0)) & (line < NB_LINES)) {
+            let selectedRow = lines[line];
+            let cell = selectedRow[row];
+
+            if(cell = 6) {
+                let isAWall = true;
+            }
+   	    }
+
+   	    return isAWall;
+   	}
+
+    method void drawWall(int line, int row) {
+       var Array sprite;
+       let sprite = Array.new(16);
+       let sprite[0] = -1;
+       let sprite[1] = -1;
+       let sprite[2] = -15997;
+       let sprite[3] = -15997;
+       let sprite[4] = -15997;
+       let sprite[5] = -15997;
+       let sprite[6] = -15997;
+       let sprite[7] = -1;
+       let sprite[8] = -1;
+       let sprite[9] = -15997;
+       let sprite[10] = -15997;
+       let sprite[11] = -15997;
+       let sprite[12] = -15997;
+       let sprite[13] = -15997;
+       let sprite[14] = -1;
+       let sprite[15] = -1;
+
+       do Renderer.render(sprite, line, row);
+       do sprite.dispose();
+       return;
+  	}
+
+   	method void drawZero(int line, int row) {
+        var Array sprite;
+        let sprite = Array.new(16);
+        let sprite[0] = 0;
+        let sprite[1] = 0;
+        let sprite[2] = 960;
+        let sprite[3] = 2016;
+        let sprite[4] = 3696;
+        let sprite[5] = 3120;
+        let sprite[6] = 3120;
+        let sprite[7] = 3120;
+        let sprite[8] = 3120;
+        let sprite[9] = 3120;
+        let sprite[10] = 3120;
+        let sprite[11] = 3696;
+        let sprite[12] = 2016;
+        let sprite[13] = 960;
+        let sprite[14] = 0;
+        let sprite[15] = 0;
+
+        do Renderer.render(sprite, line, row);
+        do sprite.dispose();
+        return;
+    }
+
+    method void drawOne(int line, int row) {
+        var Array sprite;
+        let sprite = Array.new(16);
+        let sprite[0] = 0;
+        let sprite[1] = 0;
+        let sprite[2] = 448;
+        let sprite[3] = 480;
+        let sprite[4] = 432;
+        let sprite[5] = 400;
+        let sprite[6] = 384;
+        let sprite[7] = 384;
+        let sprite[8] = 384;
+        let sprite[9] = 384;
+        let sprite[10] = 384;
+        let sprite[11] = 384;
+        let sprite[12] = 2016;
+        let sprite[13] = 4080;
+        let sprite[14] = 0;
+        let sprite[15] = 0;
+
+        do Renderer.render(sprite, line, row);
+        do sprite.dispose();
+        return;
+    }
+
+    method int getNbLines() {
+        return NB_LINES;
+    }
+
+    method int getNbRows() {
+        return NB_ROWS;
+    }
+
+    method void dispose() {
+      var Array row;
+      var int curLine;
+
+      let curLine = 0;
+
+      while(curLine < NB_LINES)
+      {
+          let row = lines[curLine];
+          do row.dispose();
+          let curLine = curLine + 1;
+      }
+      do lines.dispose();
+      do Memory.deAlloc(this);
+      return;
+    }
+
+}

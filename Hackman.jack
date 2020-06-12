@@ -11,94 +11,123 @@ class Hackman {
     field int row;
     // Determines if the hackman should be moving or not
     field boolean isMoving;
+    //Reference to the Map to check for collision
+    field Map map;
 
     //Builds a Hackman instance
-    constructor Hackman new(int aLine, int aRow) {
+    constructor Hackman new(int aLine, int aRow, Map aMap) {
       let direction = 1;
       let line = aLine;
-      let aRow = aRow;
+      let row = aRow;
       let isMoving = false;
+      let map = aMap;
 
       do drawOpenRight();
       return this;
     }
 
-
     /**
-     * Renders the hackman on the screen
+     * Moves the hackman on the screen
      *
-     * This method is responsible for updating the physics and the rendering
+     * This method is responsible for updating the physics
      */
-    method void render() {
+    method void move() {
+        var int nextLine, nextRow;
+        var boolean wallCollision;
+
         if(isMoving) {
+
+            let wallCollision = false;
+
             do erase();
 
             if(isFacingTop()) {
-                let line = line - 1;
-                if(line < 0) {
-                    let line = 0;
-                    do stopMoving();
-                }
-                if(isOpenMouthed()) {
-                    do drawOpenUp();
+                let nextLine = line - 1;
+                let nextRow = row;
+            } else {
+                if(isFacingRight()) {
+                    let nextLine = line;
+                    let nextRow = row + 1;
                 } else {
-                    if(isHalfClosedMouthed()) {
-                        do drawHalfClosedUp();
+                    if(isFacingBottom()) {
+                        let nextLine = line + 1;
+                        let nextRow = row;
                     } else {
-                        do drawClosedUp();
+                        if(isFacingLeft()) {
+                            let nextLine = line;
+                            let nextRow = row - 1;
+                        }
                     }
                 }
             }
-            if(isFacingRight()) {
-                let row = row + 1;
-                if(row > 31) {
-                    let row = 31;
-                    do stopMoving();
-                }
-                if(isOpenMouthed()) {
-                    do drawOpenRight();
+
+            if((nextLine < 0) | (nextLine > (map.getNbLines() -1)) | (nextRow < 0) | (nextRow > (map.getNbRows() - 1))) {
+                do stopMoving();
+            } else {
+                let wallCollision = map.checkForWall(nextRow, nextLine);
+                if(wallCollision) {
+                   do stopMoving();
                 } else {
-                    if(isHalfClosedMouthed()) {
-                        do drawHalfClosedRight();
-                    } else {
-                        do drawClosedRight();
-                    }
-                }
-            }
-            if(isFacingBottom()) {
-                let line = line + 1;
-                if(line > 15) {
-                    let line = 15;
-                    do stopMoving();
-                }
-                if(isOpenMouthed()) {
-                    do drawOpenDown();
-                } else {
-                    if(isHalfClosedMouthed()) {
-                        do drawHalfClosedDown();
-                    } else {
-                        do drawClosedDown();
-                    }
-                }
-            }
-            if(isFacingLeft()) {
-                let row  = row - 1;
-                if(row < 0) {
-                    let row = 0;
-                    do stopMoving();
-                }
-                if(isOpenMouthed()) {
-                    do drawOpenLeft();
-                } else {
-                    if(isHalfClosedMouthed()) {
-                        do drawHalfClosedLeft();
-                    } else {
-                        do drawClosedLeft();
-                    }
+                   let line = nextLine;
+                   let row = nextRow;
                 }
             }
         }
-        do nextAnimation();
+        return;
+    }
+
+    /**
+     * Renders the hackman
+     */
+    method void render() {
+        if(isFacingTop()) {
+            if(isOpenMouthed()) {
+                do drawOpenUp();
+            } else {
+                if(isHalfClosedMouthed()) {
+                    do drawHalfClosedUp();
+                } else {
+                    do drawClosedUp();
+                }
+            }
+        }
+        if(isFacingRight()) {
+            if(isOpenMouthed()) {
+                do drawOpenRight();
+            } else {
+                if(isHalfClosedMouthed()) {
+                    do drawHalfClosedRight();
+                } else {
+                    do drawClosedRight();
+                }
+            }
+        }
+        if(isFacingBottom()) {
+            if(isOpenMouthed()) {
+                do drawOpenDown();
+            } else {
+                if(isHalfClosedMouthed()) {
+                    do drawHalfClosedDown();
+                } else {
+                    do drawClosedDown();
+                }
+            }
+        }
+        if(isFacingLeft()) {
+            if(isOpenMouthed()) {
+                do drawOpenLeft();
+            } else {
+                if(isHalfClosedMouthed()) {
+                    do drawHalfClosedLeft();
+                } else {
+                    do drawClosedLeft();
+                }
+            }
+        }
+        if(isMoving) {
+            do nextAnimation();
+        }
+
         return;
     }
 
@@ -109,6 +138,7 @@ class Hackman {
 
     method void stopMoving() {
         let isMoving = false;
+        let animationStep = 0;
         return;
     }
 
@@ -150,26 +180,42 @@ class Hackman {
     }
 
     method void goUp() {
-        do startMoving();
-        let direction = 0;
+        var int nextLine;
+        let nextLine = line - 1;
+        if(~(map.checkForWall(row, nextLine))) {
+            do startMoving();
+            let direction = 0;
+        }
         return;
     }
 
     method void goRight() {
-        do startMoving();
-        let direction = 1;
+        var int nextRow;
+        let nextRow = row + 1;
+        if(~(map.checkForWall(nextRow, line))) {
+            do startMoving();
+            let direction = 1;
+        }
         return;
     }
 
     method void goDown() {
-        do startMoving();
-        let direction = 2;
+        var int nextLine;
+        let nextLine = line + 1;
+        if(~(map.checkForWall(row, nextLine))) {
+            do startMoving();
+            let direction = 2;
+        }
         return;
     }
 
     method void goLeft() {
-        do startMoving();
-        let direction = 3;
+        var int nextRow;
+        let nextRow = row - 1;
+        if(~(map.checkForWall(nextRow, line))) {
+            do startMoving();
+            let direction = 3;
+        }
         return;
     }
 
